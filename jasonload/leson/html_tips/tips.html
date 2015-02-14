@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>慧旅网－可定制XY坐标提示框例子</title>
+<link href="../css/newcommon.css" rel="stylesheet" type="text/css" />
+<link href="../css/tips.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../tips.js"></script>
+</head>
+<body>
+	<br><br><br><br><br>
+
+<div style=position:retlative>
+	<div onclick="showLeftTopTips(this)">提示调出框左上角 </div>
+</div>
+
+
+
+<br><br><br><br><br>
+
+<div style=position:retlative>
+	<div onclick="showRightTopTips(this)">提示调出框右上角 </div>
+</div>
+
+<br><br><br><br><br>
+
+<div style=position:retlative>
+	<div onclick="showMiddleTips(this)">提示调出框居中 </div>
+</div>
+
+<br><br><br><br><br>
+
+<div style=position:retlative>
+	<div onclick="showLeftDownTips(this)">提示调出框左下角 </div>
+</div>
+
+<br><br><br><br><br>
+
+<div style=position:retlative>
+	<div onclick="showRightDownTips(this)">提示调出框右下角 </div>
+</div>
+
+
+<script type="text/javascript">
+
+	//左上角
+	function showLeftTopTips(ex){
+		var $this = $(ex).parent();
+			$.tips({
+		            content:"亲，这里填写你要提示的内容",
+		            el: $this,
+		            top: "0",
+		            left: "0",
+		            zIndex: "9990",
+		            okText: "添加",
+		            cancelText: "关闭",
+			        ok : function() {
+			        	//添加
+			        },
+		            cancel : function() {
+		            	//关闭
+		            },
+		            lock : true　//显示遮罩层
+		        });
+	}
+	//右上角
+	function showRightTopTips(ex){
+		var $this = $(ex).parent();
+			$.tips({
+		            content:"亲，这里填写你要提示的内容",
+		            el: $this,
+		            top: "0",
+		            left: (document.body.offsetWidth*1 - 405),
+		            zIndex: "9990",
+		            okText: "添加",
+		            cancelText: "关闭",
+			        ok : function() {
+			        	//添加
+			        },
+		            cancel : function() {
+		            	//关闭
+		            },
+		            lock : true　//显示遮罩层
+		        });
+	}
+	//居中
+	function showMiddleTips(ex){
+		var $this = $(ex).parent();
+			$.tips({
+		            content:"亲，这里填写你要提示的内容",
+		            el: $this,
+		            top: (document.body.offsetHeight/2),
+		            left: (document.body.offsetWidth/2 - 205),
+		            zIndex: "9990",
+		            okText: "添加",
+		            cancelText: "关闭",
+			        ok : function() {
+			        	//添加
+			        },
+		            cancel : function() {
+		            	//关闭
+		            },
+		            lock : true　//显示遮罩层
+		        });
+	}
+	//左下角
+	function showLeftDownTips(ex){
+		var $this = $(ex).parent();
+			$.tips({
+		            content:"亲，这里填写你要提示的内容",
+		            el: $this,
+		            top: (document.body.scrollHeight*1 - 250),
+		            left: "0",
+		            zIndex: "9990",
+		            okText: "添加",
+		            cancelText: "关闭",
+			        ok : function() {
+			        	//添加
+			        },
+		            cancel : function() {
+		            	//关闭
+		            },
+		            lock : true　//显示遮罩层
+		        });
+	}
+	//右下角
+	function showRightDownTips(ex){
+		var $this = $(ex).parent();
+			$.tips({
+		            content:"亲，这里填写你要提示的内容",
+		            el: $this,
+		            top: (document.body.scrollHeight*1 - 250),
+		            left: (document.body.offsetWidth*1 - 405),
+		            zIndex: "9990",
+		            okText: "添加",
+		            cancelText: "关闭",
+			        ok : function() {
+			        	//添加
+			        },
+		            cancel : function() {
+		            	//关闭
+		            },
+		            lock : true　//显示遮罩层
+		        });
+	}
+
+</script>
+</body>
+</html>

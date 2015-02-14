@@ -1,0 +1,23 @@
+@charset "utf-8";
+/**
+* leson tips css
+* 2014-11-11
+*
+* 提示框共用样式表
+*
+**/
+
+
+.sy-tips-con,.syStepTip,.syTipsCon {position:absolute;width:403px;height:246px;background: url(../images/tips.png) no-repeat;z-index: 9999;}
+.syTipsCon  {background: url(../images/tips_left.png) no-repeat;}
+.sy-tips-con {top:-240px;right:-20px;}
+.syStepTip {top:-240px;left:80px;}
+.sy-tips-con .sy-tipsSpan,.syStepTip .sy-tipsSpan{display: block;margin-top: 60px;margin-left: 130px; font-size: 14px;color: #000;font-weight: normal;}
+.syStepTip .sy-tipsSpan {display: block;margin-top: 30px;margin-left: 140px; font-size: 14px;text-align: left; }
+.sy-tips-con .sy-tipsBtn,.syStepTip .sy-tipsBtn,.syTipsCon .sy-tipsBtn {margin-top: 25px;margin-left: 133px;display: block;}
+.syStepTip .sy-tipsBtn {text-align: left;margin-top: 20px;margin-left: 133px;display: block;}
+.syTipsCon .sy-tipsSpan  {display: block;margin-top: 42px;margin-left: 120px; font-size: 14px;text-align: left; width: 220px;line-height: 22px;}
+
+.syTipsOk ,.syTipsCancel {float: left;}
+/*遮罩层*/
+.rTips-mask {position: fixed;_position: absolute;left: 0;top: 0;width: 100%;height: 100%;background: #000;filter: alpha(opacity=30);opacity: .3;}

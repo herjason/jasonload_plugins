@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>慧旅网－下拉框插件例子</title>
+<link href="../css/newcommon.css" rel="stylesheet" type="text/css" />
+<link href="../css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../select.js"></script>
+</head>
+<body>
+	<br><br><br><br><br>
+
+<div class="leson_web_model-select-box " style="position:relative;z-index:1">
+	<div class="leson_web_model-select-text leson_web_sel-w270" data-value=""></div>
+	<ul class="leson_web_model-select-option leson_web_sel-h222">
+		<li data-option="1">1天</li>
+		<li data-option="2">2天</li>
+		<li data-option="3">3天</li>
+	</ul>
+</div>
+
+
+<br><br><br><br><br>
+
+<div class="leson_web_model-select-box" style="position:relative;z-index:0">
+	<div class="leson_web_model-select-text leson_web_sel-w270" data-value=""></div>
+	<ul class="leson_web_model-select-option leson_web_sel-h222">
+		<li data-option="1" data-value="1">1天</li>
+		<li data-option="2" data-value="2">2天</li>
+		<li data-option="3" data-value="3">3天</li>
+		<li data-option="more" render="showmoresel(this)" chain="false"><a href="javascript:void(0)">显示更多</a></li>
+	</ul>
+</div>
+<script type="text/javascript">
+	//下拉框的显示更多事件
+	function showmoresel(obj){
+	    var items = Number($(obj).prev().attr("data-value"));
+	    var cli = $(obj).prev().prop('outerHTML');
+	    var thistext = "";
+	    for(var i = items+1; i<items+2; i++){
+	        thistext += cli.replaceAll(items,i);
+	    }
+	    $(obj).before(thistext);
+	}
+</script>
+</body>
+</html>

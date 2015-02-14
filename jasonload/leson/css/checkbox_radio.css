@@ -1,0 +1,15 @@
+@charset "utf-8";
+/**
+* leson checkbox && radio css
+* 2015-02-11
+*
+* 提示框共用样式表
+*
+**/
+
+
+label.leson_web_checkbox {padding-left: 32px; cursor:pointer;background: url(../img/chk.png) no-repeat left 0; line-height:25px; height:25px; display:inline-block; }
+label.leson_web_checked {background-position:left 100%; }
+label.leson_web_disabled {background-position:left 0px;}
+.leson_web_hRadio {padding-left: 32px; display: inline-block;background: transparent url(../img/radio.png) no-repeat left top;height: 25px; line-height:25px;cursor:pointer;vertical-align:middle;}
+.leson_web_hRadio_Checked { background-position: left bottom;}
