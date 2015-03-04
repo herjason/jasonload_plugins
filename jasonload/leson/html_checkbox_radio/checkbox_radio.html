@@ -3,10 +3,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>慧旅网</title>
-<link href="../css/newcommon.css" rel="stylesheet" type="text/css" />
+<!-- <link href="../css/newcommon.css" rel="stylesheet" type="text/css" />
 <link href="../css/checkbox_radio.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="../input_checkbox_radio.js"></script>
+<script type="text/javascript" src="../input_checkbox_radio.js"></script> -->
+<script type="text/javascript" src="../../jasonload.min.js"></script>
+<script type="text/javascript" src="../config.js"></script>
+<script type="text/javascript">
+	jl.use(["leson/input_checkbox_radio","css/checkbox_radio.css"],function (inp) {
+		// body...
+		inp('#checkboxlist').hcheckbox();
+		inp('#radiolist').hradio();
+	})
+</script>
 </head>
 <body>
 	<br><br><br><br><br>
@@ -24,9 +33,6 @@
 	<label style="padding-left:50px;"></label>
 	<input name="breakfast" type="checkbox" value='0' /><label>否</label>
 </div>
-<script type="text/javascript">
-	$('#checkboxlist').hcheckbox();
-	$('#radiolist').hradio();
-</script>
+
 </body>
 </html>

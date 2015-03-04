@@ -3,10 +3,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>慧旅网－双日历插件</title>
-<link href="../css/newcommon.css" rel="stylesheet" type="text/css" />
+<!-- <link href="../css/newcommon.css" rel="stylesheet" type="text/css" />
 <link href="../css/doubleDate.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="../doubleDate.js"></script>
+<script type="text/javascript" src="../doubleDate.js"></script> -->
+
+<script type="text/javascript" src="../../jasonload.min.js"></script>
+<script type="text/javascript" src="../config.js"></script>
+<script>
+	jl.use("leson/doubledate",function (date) {
+		// body...
+		date('.doubledate1').kuiDate({className: 'doubledate1',isDisabled: "0"});
+		date('#doubledID').kuiDate({className: 'doubledate2',isDisabled: "1"});
+	})
+</script>
 </head>
 <body>
 <br><br><br><br>
@@ -30,11 +40,6 @@
 
 <input type="text" readonly="readonly" id="doubledID" class="doubledate2"/>
 
-<script type="text/javascript">
 
-$('.doubledate1').kuiDate({className: 'doubledate1',isDisabled: "0"});
-$('#doubledID').kuiDate({className: 'doubledate2',isDisabled: "1"});
-
-</script>
 </body>
 </html>

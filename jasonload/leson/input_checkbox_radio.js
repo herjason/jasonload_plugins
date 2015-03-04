@@ -1,4 +1,7 @@
-;(function($){
+define("leson/input_checkbox_radio",["jquery","css/checkbox_radio.css"],function(require,exports,module){
+
+	var $ = require("jquery");
+
 	$.fn.hcheckbox=function(options){
 		$(':checkbox+label',this).each(function(){
 			$(this).addClass('leson_web_checkbox');
@@ -18,7 +21,7 @@
 			}
 			event.stopPropagation();
 		}).prev().hide();
-	}
+	};
 
 	$.fn.hradio = function(options){
 		var self = this;
@@ -35,4 +38,7 @@
 			event.stopPropagation();
 		}).prev().hide();
 	}
-})(jQuery)
+
+
+	module.exports = $;
+})
