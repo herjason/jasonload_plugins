@@ -1,8 +1,10 @@
-define("leson/input_checkbox_radio",["jquery","css/checkbox_radio.css"],function(require,exports,module){
+define("leson/input_checkbox_radio",["jquery","./css/checkbox_radio.css"],function(require,exports,module){
 
 	var $ = require("jquery");
 
 	$.fn.hcheckbox=function(options){
+		var opt=$.extend({},{clickCallback:function(){return true;}},options);
+		
 		$(':checkbox+label',this).each(function(){
 			$(this).addClass('leson_web_checkbox');
 			if($(this).prev().is(':disabled')==false){
@@ -12,14 +14,16 @@ define("leson/input_checkbox_radio",["jquery","css/checkbox_radio.css"],function
 				$(this).addClass('leson_web_disabled');
 			}
 		}).click(function(event){
-			if(!$(this).prev().is(':checked')){
-				$(this).addClass("leson_web_checked");
-				$(this).prev()[0].checked = true;
-			}else{
-				$(this).removeClass('leson_web_checked');
-				$(this).prev()[0].checked = false;
+			if(opt.clickCallback(this)!==false){
+				if(!$(this).prev().is(':checked')){
+					$(this).addClass("leson_web_checked");
+					$(this).prev()[0].checked = true;
+				}else{
+					$(this).removeClass('leson_web_checked');
+					$(this).prev()[0].checked = false;
+				}
+				event.stopPropagation();
 			}
-			event.stopPropagation();
 		}).prev().hide();
 	};
 
