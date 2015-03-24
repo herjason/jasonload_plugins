@@ -29,17 +29,20 @@ define("leson/input_checkbox_radio",["jquery","./css/checkbox_radio.css"],functi
 
 	$.fn.hradio = function(options){
 		var self = this;
-		return $(':radio+label',this).each(function(){
+		var opt=$.extend({},{clickCallback:function(){return true;}},options);
+		return $(':radio+label',self).each(function(){
 			$(this).addClass('leson_web_hRadio');
 			if($(this).prev().is("checked"))
 			$(this).addClass('leson_web_hRadio_Checked');
 		}).click(function(event){
-			$(this).siblings().removeClass("leson_web_hRadio_Checked");
-			if(!$(this).prev().is(':checked')){
-				$(this).addClass("leson_web_hRadio_Checked");
-				$(this).prev()[0].checked = true;
+			if(opt.clickCallback(this)!==false){
+				$(this).siblings().removeClass("leson_web_hRadio_Checked");
+				if(!$(this).prev().is(':checked')){
+					$(this).addClass("leson_web_hRadio_Checked");
+					$(this).prev()[0].checked = true;
+				}
+				event.stopPropagation();
 			}
-			event.stopPropagation();
 		}).prev().hide();
 	}
 
