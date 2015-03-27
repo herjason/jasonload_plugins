@@ -32,8 +32,8 @@ define("leson/input_checkbox_radio",["jquery","./css/checkbox_radio.css"],functi
 		var opt=$.extend({},{clickCallback:function(){return true;}},options);
 		return $(':radio+label',self).each(function(){
 			$(this).addClass('leson_web_hRadio');
-			if($(this).prev().is("checked"))
-			$(this).addClass('leson_web_hRadio_Checked');
+			if($(this).prev().is(":checked"))
+				$(this).addClass('leson_web_hRadio_Checked');
 		}).click(function(event){
 			if(opt.clickCallback(this)!==false){
 				$(this).siblings().removeClass("leson_web_hRadio_Checked");
