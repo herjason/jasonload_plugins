@@ -2,7 +2,7 @@
  * 全局空间 Vcity
  */
 
-define("leson/cityselector",["jquery","css/cityselector.css"],function(require,exports,module){
+define("leson/cityselector",["jquery","./css/cityselector.css"],function(require,exports,module){
     var $ = require("jquery");
 
     var Vcity = {};
@@ -72,9 +72,10 @@ define("leson/cityselector",["jquery","css/cityselector.css"],function(require,e
     Vcity.CitySelector = function(options) {
         this.single = options.single !== false;
         this.url = options.url;
+        this.datajs = options.datajs;
         this.data = options.data;
         this.maxHot = options.maxHot || 16;
-        this.input = document.getElementById(options.input);
+        this.input = $(options.input)[0];
         this.placeholder = options.placeholder || "";
         this.render = options.render;
         this.callback = options.callback;
@@ -421,19 +422,24 @@ define("leson/cityselector",["jquery","css/cityselector.css"],function(require,e
                 this.putAllData(this.data, callback, isReload);
                 return;
             }
-            if (!this.url) {
-                return;
-            }
+            
             /* 所有城市数据,可以按照格式自行添加（北京|beijing|bj|id），前16条为热门城市 */
             var that = this;
-            $.ajax({
-                        url : this.url + "&_dc=" + new Date().getTime(),
-                        dataType : 'json',
-                        context : this,
-                        success : function(json) {
-                            this.putAllData(json, callback, isReload);
-                        }
-                    });
+            if (!this.url) {
+            	if(!this.datajs)
+            		return
+            	this.putAllData(this.datajs, callback, isReload);
+            }else{
+            	$.ajax({
+                    url : this.url + "&_dc=" + new Date().getTime(),
+                    dataType : 'json',
+                    context : this,
+                    success : function(json) {
+                        this.putAllData(json, callback, isReload);
+                    }
+                });
+            }
+           
         },
 
         putAllData : function(data, callback, isReload) {
@@ -442,13 +448,21 @@ define("leson/cityselector",["jquery","css/cityselector.css"],function(require,e
             for (var p in this.oCity) {
                 this.oCity[p] = {};
             }
-            $(data).each(function(i, n) {
+            /*$(data).each(function(i, n) {
                         if (that.render) {
                             that.allCity.push(that.render(n));
                         } else {
                             that.allCity.push(that.format(n));
                         }
-                    });
+                    });*/
+            for(var k in data){
+            	var n=data[k];
+            	if (that.render) {
+                    that.allCity.push(that.render(n));
+                } else {
+                    that.allCity.push(that.format(n));
+                }
+            }
             this.createTabPanel(callback, isReload);
         },
 
@@ -537,7 +551,7 @@ define("leson/cityselector",["jquery","css/cityselector.css"],function(require,e
             if (!this.single) {
                 $(this.input).attr("readonly", true);
             }
-            $(this.input).click(function(event) {
+            $(this.input).unbind("click").click(function(event) {
                         if (!that.allCity || !that.allCity.length) {
                             return;
                         }
