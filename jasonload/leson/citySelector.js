@@ -76,6 +76,9 @@ define("leson/cityselector",["jquery","./css/cityselector.css"],function(require
         this.data = options.data;
         this.maxHot = options.maxHot || 16;
         this.input = $(options.input)[0];
+        this.box=$(options.box);
+        this.left=options.left?options.left:0;//left和top只有在存在box时起作用，就相对于box的位置
+        this.top=options.top?options.top:0;
         this.placeholder = options.placeholder || "";
         this.render = options.render;
         this.callback = options.callback;
@@ -162,7 +165,16 @@ define("leson/cityselector",["jquery","./css/cityselector.css"],function(require
                 myIframe.style.zIndex = '-1';
                 this.rootDiv.appendChild(this.myIframe);
             }
-            document.body.appendChild(this.rootDiv);
+            if(that.box.length>0){
+                //保证box定位方式至少是relative
+                if(that.box.css("position")!="absolute"&&that.box.css("position")!="fixed"){
+                    that.box.css("position","relative");
+                }
+                $(div).css({"left":that.left,"top":that.top});
+                that.box.append(this.rootDiv);
+            }else{
+                document.body.appendChild(this.rootDiv);
+            }
 
             var childdiv = this.cityBox = document.createElement('div');
             childdiv.className = 'cityBox';
@@ -426,11 +438,11 @@ define("leson/cityselector",["jquery","./css/cityselector.css"],function(require
             /* 所有城市数据,可以按照格式自行添加（北京|beijing|bj|id），前16条为热门城市 */
             var that = this;
             if (!this.url) {
-            	if(!this.datajs)
-            		return
-            	this.putAllData(this.datajs, callback, isReload);
+                if(!this.datajs)
+                    return
+                this.putAllData(this.datajs, callback, isReload);
             }else{
-            	$.ajax({
+                $.ajax({
                     url : this.url + "&_dc=" + new Date().getTime(),
                     dataType : 'json',
                     context : this,
@@ -456,8 +468,8 @@ define("leson/cityselector",["jquery","./css/cityselector.css"],function(require
                         }
                     });*/
             for(var k in data){
-            	var n=data[k];
-            	if (that.render) {
+                var n=data[k];
+                if (that.render) {
                     that.allCity.push(that.render(n));
                 } else {
                     that.allCity.push(that.format(n));
