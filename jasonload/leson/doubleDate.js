@@ -9,7 +9,7 @@
  //isDisabled为可选参数，“0”表示今日之前不可选，“1”标志今日之前可选
  //
  //***********************
-define("leson/doubledate",["jquery","css/doubledate.css"],function(require,exports,module){
+define("leson/doubledate",["jquery","./css/doubledate.css"],function(require,exports,module){
      var $ = require("jquery");
 
      var jqObj = []; //保存对象，便于点击时做操作
@@ -19,13 +19,20 @@ define("leson/doubledate",["jquery","css/doubledate.css"],function(require,expor
             isDisabled : k_date.isDisabled || '0',
             maxDate : k_date.maxDate || '',
             minDate : k_date.minDate || '',
-            className : k_date.className
+            className : k_date.className,
+            box:$(k_date.box),
+            left:k_date.left?k_date.left:0,//left和top只有在存在box时起作用，就相对于box的位置
+            top:k_date.top?k_date.top:0,
+            callback:k_date.callback
         };
         var kDate;
         $(this).live('click',function(e){
             $('#popup_frame,#popup_pane,#a_tips_frame,#air_down_tips').hide();
             kDate = $(this);
             kui_date();
+            if(typeof(k_date.callback)=="function"){
+                k_date.callback();
+            }
         }).live('focus',function(e){
             $('#popup_frame,#popup_pane,#a_tips_frame,#air_down_tips').hide();
             kDate = $(this);
@@ -36,19 +43,40 @@ define("leson/doubledate",["jquery","css/doubledate.css"],function(require,expor
         $('.leson_web_kui_date_reset span.off').click(function(){
             //清空文本框内容
             jqObj[0].val('');
-            $('#kui_d_pane').hide();
+            //$('#kui_d_pane').hide();
+            $('#kui_d_pane').remove();
         })  
         
         //关闭按钮
         $('.leson_web_kui_date_reset span.close').click(function(){
             //清空文本框内容
-            $('#kui_d_pane').hide();
+            //$('#kui_d_pane').hide();
+            $('#kui_d_pane').remove();
         })  
 
-        function kui_date(){ 
+        function kui_date(){
+            if($("#kui_d_pane").length>0){
+                $('#kui_d_pane').remove();
+            }
+            // 日期插件的HTML元素 
+            var kui_div_date = '<div class="leson_web_kui_d_pane" id="kui_d_pane" style="display:none;"><iframe id="kui_frame_d" width="470" height="260" frameborder="0"></iframe></iframe><div class="leson_web_kui_data_content_pane"><div class="leson_web_kui_prev_next_month"><a href="javascript:;" class="leson_web_kui_prev_m"></a><span class="leson_web_kui_today"></span><a href="javascript:;" class="leson_web_kui_next_m"></a><span class="leson_web_kui_tomorrow"></span></div><div id="left_table"><dl class="leson_web_kui_data_tab"><dt>日</dt><dt>一</dt><dt>二</dt><dt>三</dt><dt>四</dt><dt>五</dt><dt>六</dt></dl><dl class="leson_web_kui_date_info" id="kui_left_t"></dl></div><div id="right_table"><dl class="leson_web_kui_data_tab"><dt>日</dt><dt>一</dt><dt>二</dt><dt>三</dt><dt>四</dt><dt>五</dt><dt>六</dt></dl><dl class="leson_web_kui_date_info" id="kui_right_t"></dl></div><div class="leson_web_kui_date_reset"><span class="off">清空</span><span class="close">关闭</span></div></div></div>';
+            if(k_date.box.length>0){
+                //保证box定位方式至少是relative
+                if(k_date.box.css("position")!="absolute"&&k_date.box.css("position")!="fixed"){
+                    k_date.box.css("position","relative");
+                }
+                k_date.box.append(kui_div_date);
+            }else{
+                $('body').append(kui_div_date);
+            }
             // 给日期插件定位 
-            var txt_left = kDate.offset().left;
-            var txt_top = kDate.offset().top + kDate.outerHeight();
+            if(k_date.box.length>0){
+                var txt_left = k_date.left;
+                var txt_top = k_date.top;
+            }else{
+                var txt_left = kDate.offset().left;
+                var txt_top = kDate.offset().top + kDate.outerHeight();
+            }
             var txt_wid = kDate.outerWidth();
             var scrollWidth = $(window).width();
             if(txt_left + 370 < scrollWidth){
@@ -340,7 +368,8 @@ define("leson/doubledate",["jquery","css/doubledate.css"],function(require,expor
             });
             // 关闭日期插件
             $('.leson_web_kui_close_btn').click(function(){
-                $('#kui_d_pane').hide();
+                //$('#kui_d_pane').hide();
+                $('#kui_d_pane').remove();
             });
             //var t = new Date().getTime();
             //alert(t-d);
@@ -382,7 +411,8 @@ define("leson/doubledate",["jquery","css/doubledate.css"],function(require,expor
                         }
                         kui_d = $(obj).html() == null ? now_date.substring(8,10) : ($(obj).html() < 10 ? 0 + $(obj).html() : $(obj).html());
                         jqObj[0].val(kui_y +'-'+ now_month +'-'+ kui_d);
-                        $('#kui_d_pane').hide();
+                        //$('#kui_d_pane').hide();
+                        $('#kui_d_pane').remove();
                         jqObj[0].change();
                     }
                 })
@@ -410,16 +440,25 @@ define("leson/doubledate",["jquery","css/doubledate.css"],function(require,expor
 
             }
             else if(typeof(data_pane[0]) == 'undefined'){
-                $('#kui_d_pane').hide();
+                //$('#kui_d_pane').hide();
+                $('#kui_d_pane').remove();
             }
         });
     });
-    $(function(){
-        /* 日期插件的HTML元素 */
+    /*$(function(){
+        // 日期插件的HTML元素 
         var kui_div_date = '<div class="leson_web_kui_d_pane" id="kui_d_pane" style="display:none;"><iframe id="kui_frame_d" width="470" height="260" frameborder="0"></iframe></iframe><div class="leson_web_kui_data_content_pane"><div class="leson_web_kui_prev_next_month"><a href="javascript:;" class="leson_web_kui_prev_m"></a><span class="leson_web_kui_today"></span><a href="javascript:;" class="leson_web_kui_next_m"></a><span class="leson_web_kui_tomorrow"></span></div><div id="left_table"><dl class="leson_web_kui_data_tab"><dt>日</dt><dt>一</dt><dt>二</dt><dt>三</dt><dt>四</dt><dt>五</dt><dt>六</dt></dl><dl class="leson_web_kui_date_info" id="kui_left_t"></dl></div><div id="right_table"><dl class="leson_web_kui_data_tab"><dt>日</dt><dt>一</dt><dt>二</dt><dt>三</dt><dt>四</dt><dt>五</dt><dt>六</dt></dl><dl class="leson_web_kui_date_info" id="kui_right_t"></dl></div><div class="leson_web_kui_date_reset"><span class="off">清空</span><span class="close">关闭</span></div></div></div>';
-        $('body').append(kui_div_date);
+        if(k_date.box.length>0){
+            //保证box定位方式至少是relative
+            if(k_date.box.css("position")!="absolute"&&k_date.box.css("position")!="fixed"){
+                k_date.box.css("position","relative");
+            }
+            k_date.box.append(kui_div_date);
+        }else{
+            $('body').append(kui_div_date);
+        }
 
-    })
+    })*/
     //鼠标移上
    /* function kui_mouseover_(obj){
         if(!$(obj).hasClass("leson_web_kui_td_kong")){
@@ -443,7 +482,8 @@ define("leson/doubledate",["jquery","css/doubledate.css"],function(require,expor
             }
             kui_d = $(obj).html() == null ? now_date.substring(8,10) : ($(obj).html() < 10 ? 0 + $(obj).html() : $(obj).html());
             jqObj[0].val(kui_y +'-'+ now_month +'-'+ kui_d);
-            $('#kui_d_pane').hide();
+            //$('#kui_d_pane').hide();
+            $('#kui_d_pane').remove();
             jqObj[0].change();
         }
     }*/
